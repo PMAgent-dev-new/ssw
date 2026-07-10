@@ -10,10 +10,20 @@ import Steps from '@/components/sections/Steps';
 import TaxiCompanyFeatures from '@/components/sections/TaxiCompanyFeatures';
 import Faq from '@/components/sections/Faq';
 
-export const metadata: Metadata = {
-  title: '特定技能向けタクシードライバー求人 - RIDE JOB FOR SSW トップ',
-  description: 'RIDE JOB FOR SSWで、あなたのスキルに合ったタクシードライバーの仕事を見つけよう。特定技能ビザ保持者を全力サポート。',
-};
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> }
+): Promise<Metadata> {
+  const { locale } = await params;
+  const base = 'https://ridejob.jp/ssw';
+  return {
+    title: '特定技能向けタクシードライバー求人 - RIDE JOB FOR SSW トップ',
+    description: 'RIDE JOB FOR SSWで、あなたのスキルに合ったタクシードライバーの仕事を見つけよう。特定技能ビザ保持者を全力サポート。',
+    alternates: {
+      canonical: `${base}/${locale}`,
+      languages: { ja: `${base}/ja`, en: `${base}/en`, zh: `${base}/zh`, 'x-default': `${base}/ja` },
+    },
+  };
+}
 
 export default function LandingPage() {
   return (

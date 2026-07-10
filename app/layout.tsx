@@ -65,7 +65,7 @@ export default function RootLayout({
   };
 
   return (
-    <html>
+    <html lang="ja">
       <head>
         <Script
           id="organization-schema"
