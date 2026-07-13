@@ -3,19 +3,11 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import testimonial1 from '../../assets/images/profile-candidate-1.jpg';
 import testimonial2 from '../../assets/images/profile-candidate-2.jpg';
 import testimonial3 from '../../assets/images/profile-candidate-3.jpg';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const Testimonials = () => {
   const currentLocale = useCurrentLocale();
@@ -26,7 +18,7 @@ const Testimonials = () => {
   }, []);
 
   // Select the correct locale object
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   const imageMap = {
     '/profile-candidate-1.jpg': testimonial1,

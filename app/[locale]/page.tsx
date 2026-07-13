@@ -20,7 +20,20 @@ export async function generateMetadata(
     description: 'RIDE JOB FOR SSWで、あなたのスキルに合ったタクシードライバーの仕事を見つけよう。特定技能ビザ保持者を全力サポート。',
     alternates: {
       canonical: `${base}/${locale}`,
-      languages: { ja: `${base}/ja`, en: `${base}/en`, zh: `${base}/zh`, 'x-default': `${base}/ja` },
+      languages: {
+        ja: `${base}/ja`,
+        en: `${base}/en`,
+        zh: `${base}/zh`,
+        vi: `${base}/vi`,
+        id: `${base}/id`,
+        tl: `${base}/tl`,
+        my: `${base}/my`,
+        th: `${base}/th`,
+        km: `${base}/km`,
+        lo: `${base}/lo`,
+        ne: `${base}/ne`,
+        'x-default': `${base}/ja`,
+      },
     },
   };
 }

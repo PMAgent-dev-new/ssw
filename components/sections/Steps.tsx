@@ -5,9 +5,7 @@ import Link from 'next/link'; // Import Link for the button
 import CtaSection from './CtaSection'; // Import CtaSection
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import step01 from '../../assets/images/step-01-line-register.png';
 import step02 from '../../assets/images/step-02-online-interview.png';
 import step03 from '../../assets/images/step-03-job-matching.png';
@@ -15,12 +13,6 @@ import step04 from '../../assets/images/step-04-company-visit.png';
 import step05 from '../../assets/images/step-05-visa-support.png';
 import step06 from '../../assets/images/step-06-life-start.png';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const Steps = () => {
   const currentLocale = useCurrentLocale();
@@ -31,7 +23,7 @@ const Steps = () => {
   }, []);
 
   // Select the correct locale object
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   const imageMap = {
     '/step-01-line-register.png': step01,

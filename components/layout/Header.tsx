@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image'; // Import Image component
 import { useState } from 'react'; // Import useState
 import { useI18n, useChangeLocale, useCurrentLocale } from '@/locales/client'; // Import hooks
+import { LOCALE_OPTIONS, type AppLocale } from '@/locales/all';
 import logo from '../../assets/images/logo.png';
 
 const Header = () => {
@@ -23,13 +24,13 @@ const Header = () => {
   };
 
   // Updated language selection handler
-  const handleLanguageSelect = (lang: 'en' | 'ja' | 'zh') => {
+  const handleLanguageSelect = (lang: AppLocale) => {
     changeLocale(lang); // Change the locale
     setIsLanguageDropdownOpen(false);
   };
 
   // Function to close menus and change locale for mobile
-  const handleMobileLanguageSelect = (lang: 'en' | 'ja' | 'zh') => {
+  const handleMobileLanguageSelect = (lang: AppLocale) => {
     changeLocale(lang);
     toggleMobileMenu(); // Close menu after selection
   };
@@ -78,29 +79,18 @@ const Header = () => {
               {t('header.language')} 
           </button>
             {isLanguageDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+              <div className="absolute right-0 mt-2 w-48 max-h-96 overflow-y-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
                 <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                  <div
-                    onClick={() => handleLanguageSelect('en')} // Call handler
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer" role="menuitem"
-                  >
-                    {/* @ts-ignore */} 
-                    {t('header.english')} 
-                  </div>
-                  <div
-                    onClick={() => handleLanguageSelect('zh')} // Call handler
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer" role="menuitem"
-                  >
-                    {/* @ts-ignore */} 
-                    {t('header.chinese')} 
-                  </div>
-                  <div
-                    onClick={() => handleLanguageSelect('ja')} // Call handler
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer" role="menuitem"
-                  >
-                    {/* @ts-ignore */} 
-                    {t('header.japanese')} 
-                  </div>
+                  {LOCALE_OPTIONS.map((opt) => (
+                    <div
+                      key={opt.code}
+                      onClick={() => handleLanguageSelect(opt.code)}
+                      className={`block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 cursor-pointer ${opt.code === currentLocale ? 'font-bold text-teal-600' : 'text-gray-700'}`}
+                      role="menuitem"
+                    >
+                      {opt.label}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -152,28 +142,15 @@ const Header = () => {
                 {t('header.faq')} 
               </Link>
             </div>
-            {/* Language Links */}
+            {/* Language Links（全ロケールをデータ駆動で表示） */}
             <div className="pt-2">
-               {/* Call mobile-specific handler */}
-              <div onClick={() => handleMobileLanguageSelect('en')} className="block cursor-pointer">
-                <span className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">
-                  {/* @ts-ignore */} 
-                  {t('header.english')} 
-                </span>
-              </div>
-              <div onClick={() => handleMobileLanguageSelect('zh')} className="block cursor-pointer">
-                <span className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">
-                  {/* @ts-ignore */} 
-                  {t('header.chinese')} 
-                </span>
-              </div>
-               {/* Added Japanese option for mobile */}
-              <div onClick={() => handleMobileLanguageSelect('ja')} className="block cursor-pointer">
-                 <span className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">
-                   {/* @ts-ignore */} 
-                   {t('header.japanese')} 
-                 </span>
-               </div>
+              {LOCALE_OPTIONS.map((opt) => (
+                <div key={opt.code} onClick={() => handleMobileLanguageSelect(opt.code)} className="block cursor-pointer">
+                  <span className={`hover:bg-gray-50 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium ${opt.code === currentLocale ? 'font-bold text-teal-600' : 'text-gray-600'}`}>
+                    {opt.label}
+                  </span>
+                </div>
+              ))}
             </div>
             {/* Line Button */}
             <div className="block cursor-pointer mt-4">

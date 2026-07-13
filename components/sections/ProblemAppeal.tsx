@@ -3,9 +3,7 @@
 import Image from 'next/image';
 import { useCurrentLocale } from '@/locales/client';
 import { useState, useEffect } from 'react';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import problemJob from '../../assets/images/problem-job.jpg';
 import problemInterview from '../../assets/images/problem-interview.jpg';
 import problemLife from '../../assets/images/problem-life.jpg';
@@ -16,11 +14,6 @@ interface ProblemCard {
   alt: string;
 }
 
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const ProblemAppeal = () => {
   const currentLocale = useCurrentLocale();
@@ -30,7 +23,7 @@ const ProblemAppeal = () => {
     setIsMounted(true);
   }, []);
 
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   const problemsDataObject = locale.problemAppeal.cards;
 
