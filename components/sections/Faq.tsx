@@ -2,17 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import Script from 'next/script'; // Import Script
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 // Define type for FAQ item based on locale structure
 interface FaqItem {
@@ -30,7 +22,7 @@ const Faq = () => {
   }, []);
 
   // Select the correct locale object
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   const toggleItem = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);

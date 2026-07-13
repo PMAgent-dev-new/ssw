@@ -3,19 +3,11 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import featureVisa from '../../assets/images/feature-visa-support.jpg';
 import featureLife from '../../assets/images/feature-life-support.jpg';
 import featureFollow from '../../assets/images/feature-follow-up.jpg';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const ServiceFeatures = () => {
   const currentLocale = useCurrentLocale();
@@ -26,7 +18,7 @@ const ServiceFeatures = () => {
   }, []);
 
   // Select the correct locale object
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   const imageMap = {
     '/feature-visa-support.jpg': featureVisa,

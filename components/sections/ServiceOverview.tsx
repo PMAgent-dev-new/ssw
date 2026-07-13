@@ -3,17 +3,9 @@
 import Image from 'next/image'; // Import Image
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import serviceOverview from '../../assets/images/service_overview.png';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const ServiceOverview = () => {
   const currentLocale = useCurrentLocale();
@@ -24,7 +16,7 @@ const ServiceOverview = () => {
   }, []);
 
   // Select the correct locale object, default to 'ja' if not found
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   if (!isMounted) {
     return null; // Prevent hydration mismatch

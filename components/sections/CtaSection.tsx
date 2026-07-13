@@ -3,16 +3,8 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const CtaSection = () => {
   const currentLocale = useCurrentLocale();
@@ -23,7 +15,7 @@ const CtaSection = () => {
   }, []);
 
   // Select the correct locale object
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   if (!isMounted) {
     return null; // Prevent hydration mismatch

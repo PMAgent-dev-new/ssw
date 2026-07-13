@@ -4,19 +4,11 @@ import Image from 'next/image';
 import CtaSection from './CtaSection';
 import { useState, useEffect } from 'react';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import supportDriver from '../../assets/images/support-driver.jpg';
 import supportHousing from '../../assets/images/support-housing.jpg';
 import supportMeeting from '../../assets/images/support-meeting.jpg';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const TaxiCompanyFeatures = () => {
   const currentLocale = useCurrentLocale();
@@ -33,7 +25,7 @@ const TaxiCompanyFeatures = () => {
   };
 
   // Select the correct locale object
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   if (!isMounted) {
     return null; // Prevent hydration mismatch

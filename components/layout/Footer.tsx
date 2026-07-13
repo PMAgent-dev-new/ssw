@@ -1,23 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCurrentLocale } from '@/locales/client';
-import localeEn from '@/locales/en';
-import localeJa from '@/locales/ja';
-import localeZh from '@/locales/zh';
+import { pickLocale } from '@/locales/all';
 import footerBg from '../../assets/images/footer.png';
 import logo from '../../assets/images/logo.png';
 
-// Map locale strings to the imported objects
-const locales = {
-  en: localeEn,
-  ja: localeJa,
-  zh: localeZh,
-};
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const currentLocale = useCurrentLocale();
-  const locale = locales[currentLocale as keyof typeof locales] || localeJa;
+  const locale = pickLocale(currentLocale);
 
   return (
     <footer className="bg-white pt-12 pb-8 border-t border-gray-200 relative overflow-hidden">
